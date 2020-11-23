@@ -1,1 +1,1 @@
-worker: nodemon bot.js
+worker: npm start
