@@ -29,7 +29,9 @@ var TelegramBot = require('node-telegram-bot-api');
     
       const [hours,minutes] = match[2].split(':');
       const now = new Date();
-      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours + 3, minutes, 0);
+      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours - 3, minutes, 0);
+      console.log('now = ', now);
+      console.log('date = ', date);
       
       const notification = schedule.scheduleJob(date, function(){
         bot.sendMessage(userId, 'Напоминаю, что вы должны: '+ text + ' сейчас.');
