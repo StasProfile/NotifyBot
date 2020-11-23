@@ -34,20 +34,28 @@ var TelegramBot = require('node-telegram-bot-api');
     
     bot.onText(/\/удалить (.+)/, function (msg, match) {
         const userId = msg.from.id;
-         number = match[1] - 1;
-         console.log(number);
-        if (number > notes.length - 1){
-            bot.sendMessage(userId, 'не существует уведомления с таким номером\n' + notifList);
-        }
-        else {
-            notes.splice(number,1);
+        if (match[1] === 'все' || match[1] === 'всё') {
+            notes = [];
             notifList = '';
-            for (let i = 0; i < notes.length; i++) { 
-                notifList += (i + 1) + ') ' + notes[i].text + ' в ' + notes[i].time + '\n';
-              }
-            bot.sendMessage(userId, 'удалено, новый список уведомлений:\n' + notifList);
+            bot.sendMessage(userId, 'все уведомления удалены');
+        } 
+        else {
+            number = match[1] - 1;
+            console.log(number);
+            if (number > notes.length - 1){
+                bot.sendMessage(userId, 'не существует уведомления с таким номером\n' + notifList);
+            }
+            else {
+                notes.splice(number,1);
+                notifList = '';
+                for (let i = 0; i < notes.length; i++) { 
+                    notifList += (i + 1) + ') ' + notes[i].text + ' в ' + notes[i].time + '\n';
+                }
+                bot.sendMessage(userId, 'удалено, новый список уведомлений:\n' + notifList);
+            }
         }
     });
+
 
 	setInterval(function(){
 		for (var i = 0; i < notes.length; i++){
