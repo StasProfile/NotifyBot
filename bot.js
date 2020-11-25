@@ -25,7 +25,7 @@ var TelegramBot = require('node-telegram-bot-api');
         }
     users[userId].push({message : text, time});
 
-      bot.sendMessage(userId,'Отлично! Я обязательно напомню, если не сдохну :)');
+      bot.sendMessage(userId,'Отлично! Я обязательно напомню ' + text +' в ' + time);
     
       const [hours,minutes] = match[2].split(':');
       const now = new Date();
