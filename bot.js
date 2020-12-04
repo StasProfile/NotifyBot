@@ -15,9 +15,12 @@ var TelegramBot = require('node-telegram-bot-api');
     });
 
 	bot.onText(/\/напомни (.+) в (.+)/, function (msg, match) {
-	  const userId = msg.from.id;
-	  const text = match[1];
-	  const time = match[2];
+    
+	const userId = msg.from.id;
+    const text = match[1];
+    const time = match[2];
+    if (!/(^(([0-1][0-9])|(2[0-3])):([0-5][0-9])$)/.test(match[2]))  
+        return bot.sendMessage(userId, 'Неверный формат времени! При созданиия уведомления, укажите время в формате hh:mm');
     //   notes.push( { uid:userId, time:time, text:text } );
 
       if (!users.hasOwnProperty(userId)) { 
@@ -29,7 +32,7 @@ var TelegramBot = require('node-telegram-bot-api');
     
       const [hours,minutes] = match[2].split(':');
       const now = new Date();
-      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours - 3, minutes, 0);
+      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours , minutes, 0); // hours - 3
       console.log('now = ', now);
       console.log('date = ', date);
       
