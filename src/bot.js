@@ -14,7 +14,7 @@ cron.schedule('* * * * *', async () => {
   for (const note of notes) {
     const minute = 60000;
     console.log(Date.now());
-    console.log(note.date);
+    console.log(new Date(note.date));
     console.log(Date.now() - note.date);
     if (Date.now() - note.date < minute) {
       bot.sendMessage(note.userId, `Напоминаю ${note.message} сейчас`);
