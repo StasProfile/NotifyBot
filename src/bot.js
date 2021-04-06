@@ -9,13 +9,10 @@ const bot = new TelegramBot(token, { polling: true });
 
 cron.schedule('* * * * *', async () => {
   const notes = await Note.find({ date: { $lte: Date.now() } });
-  console.log(new Date());
-  console.log(notes);
+
   for (const note of notes) {
     const minute = 60000;
-    console.log(Date.now());
-    console.log(new Date(note.date));
-    console.log(Date.now() - note.date);
+
     if (Date.now() - note.date < minute) {
       bot.sendMessage(note.userId, `Напоминаю ${note.message} сейчас`);
     } else if (note.date - Date.now() > minute * 20) {
@@ -32,6 +29,7 @@ bot.onText(/\/start/, async (msg) => {
       console.log(`Ошибка при создании юзера\n${e}`);
       throw e;
     });
+
   if (user) {
     await bot.sendMessage(msg.from.id, 'Ты уже добавлен')
       .catch((err) => console.log(err));
@@ -77,15 +75,6 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
       username: `${msg.from.first_name} ${msg.from.last_name}`,
     });
   }
-
-  // const moscow = dt.setZone('Europe/Moscow', {
-  //   keepLocalTime: true,
-  // }).toJSDate();
-  // const madrid = dt.setZone('Europe/Madrid', {
-  //   keepLocalTime: true,
-  // }).toJSDate();
-
-  // console.log(moscow, madrid, moscow - madrid);
 
   await Note.create({
     userId: msg.from.id,
