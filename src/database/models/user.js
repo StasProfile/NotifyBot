@@ -7,10 +7,10 @@ const userSchema = mongoose.Schema({
     require: true,
   },
   username: String,
-  notes: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Note',
-  }],
+  // notes: [{
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Note',
+  // }],
 });
 
 const User = mongoose.model('User', userSchema);

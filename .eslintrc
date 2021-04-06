@@ -12,5 +12,6 @@
   "rules": {
     "no-prototype-builtins": 0,
     "no-underscore-dangle": 0,
+    "no-restricted-syntax": 0
   }
 }

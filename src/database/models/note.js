@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const noteSchema = mongoose.Schema({
   userId: Number,
   message: String,
-  time: String,
-  number: Number,
+  date: Date,
+  // number: Number,
 });
 
 const Note = mongoose.model('Note', noteSchema);
