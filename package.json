@@ -11,6 +11,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "15.x"
+  },
   "dependencies": {
     "dotenv": "^8.2.0",
     "luxon": "^1.26.0",
