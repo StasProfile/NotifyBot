@@ -124,7 +124,7 @@ bot.onText(/\/delete (.+)/, async (msg, match) => {
     return;
   }
   console.log(notes[index - 1].message);
-  await Note.deleteOne({ _id: notes[index - 1]._id });
+  await Note.deleteOne({ _id: notes[index - 1]._id, userId: msg.from.id });
   await bot.sendMessage(msg.from.id, 'Уведомление успешно удалено /list чтобы посмотреть список ваших уведомлений')
     .catch((err) => console.log(err));
 });
