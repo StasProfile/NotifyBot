@@ -78,10 +78,21 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
     });
   }
 
+  // const moscow = dt.setZone('Europe/Moscow', {
+  //   keepLocalTime: true,
+  // }).toJSDate();
+  // const madrid = dt.setZone('Europe/Madrid', {
+  //   keepLocalTime: true,
+  // }).toJSDate();
+
+  // console.log(moscow, madrid, moscow - madrid);
+
   await Note.create({
     userId: msg.from.id,
     message,
-    date: dt.setZone('Europe/Moscow').toJSDate(),
+    date: dt.setZone('Europe/Moscow', {
+      keepLocalTime: true,
+    }).toJSDate(),
   });
 
   await bot.sendMessage(userId, `Отлично! Я обязательно напомню ${message} в ${dt.toFormat('HH:mm dd/MM')}`)
