@@ -9,8 +9,13 @@ const bot = new TelegramBot(token, { polling: true });
 
 cron.schedule('* * * * *', async () => {
   const notes = await Note.find({ date: { $lte: Date.now() } });
+  console.log(new Date());
+  console.log(notes);
   for (const note of notes) {
     const minute = 60000;
+    console.log(Date.now());
+    console.log(note.date);
+    console.log(Date.now() - note.date);
     if (Date.now() - note.date < minute) {
       bot.sendMessage(note.userId, `Напоминаю ${note.message} сейчас`);
     } else if (note.date - Date.now() > minute * 20) {
