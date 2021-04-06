@@ -5,14 +5,26 @@
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node bot.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "luxon": "^1.26.0",
+    "mongoose": "^5.10.15",
     "node-cron": "^2.0.3",
     "node-schedule": "^1.3.2",
     "node-telegram-bot-api": "^0.50.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "nodemon": "^2.0.6"
   }
 }
