@@ -81,7 +81,7 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
   await Note.create({
     userId: msg.from.id,
     message,
-    date: dt.toJSDate(),
+    date: dt.setZone('Europe/Moscow').toJSDate(),
   });
 
   await bot.sendMessage(userId, `Отлично! Я обязательно напомню ${message} в ${dt.toFormat('HH:mm dd/MM')}`)
