@@ -27,7 +27,7 @@ app.post('/notifications/:userId', async (req, res) => {
     message,
     date: dt.setZone('Europe/Moscow', {
       keepLocalTime: true,
-    }).toJSDate(),,
+    }).toJSDate(),
   });
 
   await bot.sendMessage(req.params.userId, `Уведомление создано! Я обязательно напомню ${message} в ${dt.toFormat('HH:mm dd/MM')}`)
