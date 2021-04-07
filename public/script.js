@@ -1,10 +1,59 @@
-const form = document.getElementById('createNotification');
 const searchParams = new URLSearchParams(location.search);
 const userId = searchParams.get('userId');
 
-console.log(userId);
+function zero_first_format(value)
+  {
+      if (value < 10)
+      {
+          value='0'+value;
+      }
+      return value;
+  }
 
-form.addEventListener('submit', function(event) {
+  /* функция получения текущей даты и времени */
+  function date(current_datetime)
+  {
+      const day = zero_first_format(current_datetime.getDate());
+      const month = zero_first_format(current_datetime.getMonth()+1);
+      const year = current_datetime.getFullYear();
+
+      return `${year}-${month}-${day}`;
+  }
+
+  function time(current_datetime)
+  {
+      const hours = zero_first_format(current_datetime.getHours());
+      const minutes = zero_first_format(current_datetime.getMinutes());
+      
+      return `${hours}:${minutes}`;
+  }
+
+  function createDateTime(current_datetime)
+  {
+      const day = zero_first_format(current_datetime.getDate());
+      const month = zero_first_format(current_datetime.getMonth()+1);
+      const year = current_datetime.getFullYear();
+      const hours = zero_first_format(current_datetime.getHours());
+      const minutes = zero_first_format(current_datetime.getMinutes());
+
+      return `${hours}:${minutes} ${day}.${month}.${year}`;
+  }
+
+const showList = async () => {
+  const response = await fetch(`notifications/${userId}`);
+  const notes = await response.json();
+  const elementPlace = document.getElementById('notificationList');
+  notes.forEach(note => {
+    const newElement = document.createElement('div');
+    newElement.innerText = `${note.message} в ${createDateTime(new Date(note.date))}`;
+    elementPlace.insertAdjacentElement('beforeend', newElement);
+  });
+}
+
+window.addEventListener('load', async () => {
+  const form = document.getElementById('createNotification');
+  await showList();
+  form.addEventListener('submit', async function(event) {
     event.preventDefault();
     let date = ``;
     const [year, month, day] = this.calendar.value.split('-');
@@ -15,99 +64,84 @@ form.addEventListener('submit', function(event) {
     }
     date = `${day}/${month}`;
     
-    fetch(`notifications/${userId}`, { method: 'post', headers: {
+    const resp = await fetch(`notifications/${userId}`, { method: 'post', headers: {
         'Content-Type': 'application/json'
     } , body: JSON.stringify({
         message: this.comment.value,
         date: `${time} ${date}`
     })});
-});
 
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
+    if (resp.ok) {
+      console.log(resp);
+      const elementPlace = document.getElementById('notificationList');
+      while (elementPlace.firstChild) {
+        elementPlace.firstChild.remove()
+      }
+      await showList();
+    }
+  });
 
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
+  var myNodelist = document.getElementsByTagName("LI");
+  var i;
+  for (i = 0; i < myNodelist.length; i++) {
+    var span = document.createElement("SPAN");
+    var txt = document.createTextNode("\u00D7");
+    span.className = "close";
+    span.appendChild(txt);
+    myNodelist[i].appendChild(span);
   }
-}
 
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("notificationId").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("notificationId").value = "";
-
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
+  // Click on a close button to hide the current list item
+  var close = document.getElementsByClassName("close");
+  var i;
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
       var div = this.parentElement;
       div.style.display = "none";
     }
   }
-}
 
- /* функция добавления ведущих нулей */
-    /* (если число меньше десяти, перед числом добавляем ноль) */
-    function zero_first_format(value)
-    {
-        if (value < 10)
-        {
-            value='0'+value;
-        }
-        return value;
-    }
+  // Add a "checked" symbol when clicking on a list item
+  // var list = document.querySelector('ul');
+  // list.addEventListener('click', function(ev) {
+  //   if (ev.target.tagName === 'LI') {
+  //     ev.target.classList.toggle('checked');
+  //   }
+  // }, false);
 
-    /* функция получения текущей даты и времени */
-    function date()
-    {
-        var current_datetime = new Date();
-        var day = zero_first_format(current_datetime.getDate());
-        var month = zero_first_format(current_datetime.getMonth()+1);
-        var year = current_datetime.getFullYear();
+  // // Create a new list item when clicking on the "Add" button
+  // function newElement() {
+  //   var li = document.createElement("li");
+  //   var inputValue = document.getElementById("notificationId").value;
+  //   var t = document.createTextNode(inputValue);
+  //   li.appendChild(t);
+  //   if (inputValue === '') {
+  //     alert("You must write something!");
+  //   } else {
+  //     document.getElementById("myUL").appendChild(li);
+  //   }
+  //   document.getElementById("notificationId").value = "";
 
-        return `${year}-${month}-${day}`;
-    }
+  //   var span = document.createElement("SPAN");
+  //   var txt = document.createTextNode("\u00D7");
+  //   span.className = "close";
+  //   span.appendChild(txt);
+  //   li.appendChild(span);
 
-    function time()
-    {
-        var current_datetime = new Date();
-        var hours = zero_first_format(current_datetime.getHours());
-        var minutes = zero_first_format(current_datetime.getMinutes());
-        
-        return `${hours}:${minutes}`;
-    }
+  //   for (i = 0; i < close.length; i++) {
+  //     close[i].onclick = function() {
+  //       var div = this.parentElement;
+  //       div.style.display = "none";
+  //     }
+  //   }
+  // }
 
-    document.getElementById('current_date_block').value = date();
-    document.getElementById('current_time_block').value = time();
+  /* функция добавления ведущих нулей */
+      /* (если число меньше десяти, перед числом добавляем ноль) */
+  
+  document.getElementById('current_date_block').value = date(new Date());
+  document.getElementById('current_time_block').value = time(new Date());
+});
+
+
+

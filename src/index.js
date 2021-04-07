@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 app.get('/notifications/:userId', async (req, res) => {
-  const notes = await Note.find({ userId: req.params.userId });
+  const notes = await Note.find({ userId: req.params.userId }).sort('date');
   res.json(notes);
 });
 
