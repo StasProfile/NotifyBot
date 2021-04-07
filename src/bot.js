@@ -36,12 +36,14 @@ bot.onText(/\/start/, async (msg) => {
     return;
   }
 
-  await User.create({
+  const newUser = await User.create({
     telegramId: msg.from.id,
     username: `${msg.from.first_name} ${msg.from.last_name}`,
   });
-  await bot.sendMessage(msg.from.id, 'Я тебя добавил')
+
+  await bot.sendMessage(msg.from.id, `Я тебя добавил\nТвоя персональная ссылка для управления уведомлениями из браузера:\n${process.env.APP_URL}?userId=${newUser.telegramId}`)
     .catch((err) => console.log(err));
+
 });
 
 bot.onText(/\/help/, async (msg) => {
