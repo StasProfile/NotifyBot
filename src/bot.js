@@ -98,7 +98,9 @@ bot.onText(/\/list/, async (msg) => {
       .catch((err) => console.log(err));
     return;
   }
-  const str = notes.map((note, index) => `${index + 1}) ${note.message} ${DateTime.fromJSDate(note.date).toFormat('HH:mm dd/MM')}`).join('\n');
+  const str = notes.map((note, index) => `${index + 1}) ${note.message} ${DateTime.fromJSDate(note.date).setZone('Europe/Moscow', {
+    keepLocalTime: true,
+  }).toFormat('HH:mm dd/MM')}`).join('\n');
   await bot.sendMessage(msg.from.id, str)
     .catch((err) => console.log(err));
 });
