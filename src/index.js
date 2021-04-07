@@ -1,5 +1,6 @@
 require('dotenv').config();
 require('./database');
+const mongoose = require('mongoose');
 
 const express = require('express');
 const { DateTime } = require('luxon');
@@ -37,13 +38,26 @@ app.post('/notifications/:userId', async (req, res) => {
 });
 
 app.delete('/notifications/:userId/:notificationId', async (req, res) => {
-  await Note.deleteOne({ _id: req.params.notificarionId, userId: req.params.userId });
+  const note = await Note.findOne({ _id: req.params.notificationId });
+  if (!note) {
+    return res.json({message: 'note not found'});
+  }
+  const dt = await DateTime.fromJSDate(new Date(note.date)).toFormat('HH:mm dd/MM');
+  await Note.deleteOne({ _id: req.params.notificationId, userId: req.params.userId });
+  await bot.sendMessage(req.params.userId, `Уведомление ${note.message} в ${dt} успешно удалено /list чтобы посмотреть список ваших уведомлений`)
+    .catch((err) => console.log(err));
+
   res.json({ message: 'notification successfully deleted' });
 });
 
 app.delete('/notifications/:userId/all', async (req, res) => {
   await Note.deleteMany({ userId: req.params.userId });
   res.json({ message: 'all notifications successfuly deleted' });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong' });
 });
 
 app.listen(process.env.PORT || port, () => {
