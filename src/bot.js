@@ -43,7 +43,11 @@ bot.onText(/\/start/, async (msg) => {
 
   await bot.sendMessage(msg.from.id, `Я тебя добавил\nТвоя персональная ссылка для управления уведомлениями из браузера:\n${process.env.APP_URL}?userId=${newUser.telegramId}`)
     .catch((err) => console.log(err));
+});
 
+bot.onText(/\/link/, async (msg) => {
+  await bot.sendMessage(msg.from.id, `Держи твою персональную ссылку для управления уведомлениями из браузера:\n${process.env.APP_URL}?userId=${msg.from.id}`)
+    .catch((err) => console.log(err));
 });
 
 bot.onText(/\/help/, async (msg) => {
