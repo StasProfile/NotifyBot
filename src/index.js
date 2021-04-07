@@ -20,16 +20,14 @@ app.get('/notifications/:userId', async (req, res) => {
 app.post('/notifications/:userId', async (req, res) => {
   const { date, message } = req.body;
 
-  let dt = DateTime.fromFormat(date, 'HH:mm dd/MM');
-  const dtDefault = DateTime.fromFormat(date, 'HH:mm');
-  if (!dt.isValid) {
-    dt = dtDefault;
-  }
+  const dt = DateTime.fromFormat(date, 'HH:mm dd/MM');
 
   await Note.create({
     userId: req.params.userId,
     message,
-    date: dt,
+    date: dt.setZone('Europe/Moscow', {
+      keepLocalTime: true,
+    }).toJSDate(),,
   });
 
   await bot.sendMessage(req.params.userId, `Уведомление создано! Я обязательно напомню ${message} в ${dt.toFormat('HH:mm dd/MM')}`)
