@@ -35,6 +35,7 @@ bot.onText(/\/start/, async (msg) => {
       .catch((err) => console.log(err));
     return;
   }
+
   await User.create({
     telegramId: msg.from.id,
     username: `${msg.from.first_name} ${msg.from.last_name}`,
@@ -84,7 +85,7 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
     }).toJSDate(),
   });
 
-  await bot.sendMessage(userId, `Отлично! Я обязательно напомню ${message} в ${dt.toFormat('HH:mm dd/MM')}`)
+  await bot.sendMessage(userId, `Уведомление создано! Я обязательно напомню ${message} в ${dt.toFormat('HH:mm dd/MM')}`)
     .catch((err) => console.log(err));
 });
 
