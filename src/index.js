@@ -48,6 +48,6 @@ app.delete('/notifications/:userId/all', async (req, res) => {
   res.json({ message: 'all notifications successfuly deleted' });
 });
 
-app.listen(port, () => {
+app.listen(process.env.PORT || port, () => {
   console.log('Server started');
 });
