@@ -9,12 +9,14 @@
   <form id="createNotification">
    <p><b>Выберите дату: </b><input type="date" name="calendar" id="current_date_block">
       <p><b>Выберите время: </b><input type="time" name="cron" id="current_time_block" min="00:00" max="23:59">
-<div id="myDIV" class="header">
- <p><b>Введите название уведомления:</b><br>
-   <textarea class="text-area" name="comment" cols="40" rows="3" id="notificationId" placeholder="Ввод..."></textarea>
-   <input class="add-button" type="submit" id ="notificationId"></p>
-  </form>
-</div>
+        <div id="myDIV" class="header">
+            <p><b>Введите название уведомления:</b><br>
+              <textarea name="comment" cols="40" rows="3" id="notificationId" placeholder="Ввод..."></textarea>
+              <input type="submit" id ="notificationId"></p>
+             </form>
+           </div>
+           <div id="notificationList">
+           </div>
 
 <ul id="myUL">
 </ul>
