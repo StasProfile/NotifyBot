@@ -16,6 +16,7 @@ ul li {
 
 /* крестик */
 .notification__close {
+    cursor: pointer;
     font-size: 30px;
     color: rgba(245, 11, 11, 0.973);
     position: absolute;
