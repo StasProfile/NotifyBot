@@ -15,10 +15,13 @@ ul li {
 
 
 /* крестик */
-.close {
+.notification__close {
+    font-size: 30px;
+    color: rgba(245, 11, 11, 0.973);
     position: absolute;
     right: 0;
-    top: 0;
+    bottom: 0;
+    top: -10;
     padding: 12px 10px 12px 16px;
 }
 

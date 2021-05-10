@@ -43,12 +43,16 @@ bot.onText(/\/start/, async (msg) => {
 
   await bot.sendMessage(msg.from.id, `Я тебя добавил\nТвоя персональная ссылка для управления уведомлениями из браузера:\n${process.env.APP_URL}?userId=${newUser.telegramId}`)
     .catch((err) => console.log(err));
+});
 
+bot.onText(/\/link/, async (msg) => {
+  await bot.sendMessage(msg.from.id, `Держи твою персональную ссылку для управления уведомлениями из браузера:\n${process.env.APP_URL}?userId=${msg.from.id}`)
+    .catch((err) => console.log(err));
 });
 
 bot.onText(/\/help/, async (msg) => {
   const userId = msg.from.id;
-  await bot.sendMessage(userId, 'Cоздать уведомление:\n/new {название уведомления} в {время в формате hh:mm} {дата в формате dd/mm} Дату указывать не обязательно, дата по умолчанию - день создания уведомления.\nПосмотреть текущий список уведомлений:\n/list\nУдалить уведомление по нормеру:\n/delete {номер уведомления из списка уведомлений}\nУдалить все ваши уведомления:\n/delete all')
+  await bot.sendMessage(userId, 'Cоздать уведомление:\n/new {название уведомления} в {время в формате hh:mm} {дата в формате dd/mm} Дату указывать не обязательно, дата по умолчанию - день создания уведомления.\nПосмотреть текущий список уведомлений:\n/list\nУдалить уведомление по нормеру:\n/delete {номер уведомления из списка уведомлений}\nУдалить все ваши уведомления:\n/delete all\n/link\nПолучить персональную ссылку для управления уведомлениями из браузера')
     .catch((err) => console.log(err));
 });
 
@@ -98,7 +102,7 @@ bot.onText(/\/list/, async (msg) => {
       .catch((err) => console.log(err));
     return;
   }
-  const str = notes.map((note, index) => `${index + 1}) ${note.message} ${DateTime.fromJSDate(note.date).toFormat('HH:mm dd/MM')}`).join('\n');
+  const str = notes.map((note, index) => `${index + 1}) ${note.message} ${DateTime.fromJSDate(note.date).setZone('Europe/Moscow').toFormat('HH:mm dd/MM')}`).join('\n');
   await bot.sendMessage(msg.from.id, str)
     .catch((err) => console.log(err));
 });
