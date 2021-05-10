@@ -75,6 +75,8 @@ textarea {
     width: 100%; /* Ширина поля в процентах */
     height: 100px; /* Высота поля в пикселах */
     resize: none; /* Запрещаем изменять размер */
+    font-family: cursive;
+    font-size: 20px;
    } 
 big
 {
@@ -95,11 +97,3 @@ big
     display: block;
     position: relative;
 }
-
-.text-area {
-    width: 100%; /* Ширина поля в процентах */
-    height: 100px; /* Высота поля в пикселах */
-    font-family: cursive;
-    font-size: 20px;
-    resize: none;
-  }
