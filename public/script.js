@@ -82,7 +82,6 @@ const showList = async (userId) => {
 
 window.addEventListener('load', async () => {
   const userId = await getUserId(uniqueId);
-  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", userId);
   // console.log('load is over');
   // // const userId = await fetch(`users/${uniqueId}`);;
   // console.log(userId);
