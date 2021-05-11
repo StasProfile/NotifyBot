@@ -1,7 +1,14 @@
 const searchParams = new URLSearchParams(location.search);
 // const userId = searchParams.get('userId');
 const uniqueId = searchParams.get('uniqueId');
-console.log(uniqueId);
+
+const getUserId = async (uniqueId) => {
+  console.log(uniqueId);
+  const response = await fetch(`users/${uniqueId}`);
+  const userId = await response.json();
+  console.log(userId);
+  return userId;
+}
 
 function zero_first_format(value)
   {
@@ -42,15 +49,9 @@ function zero_first_format(value)
   }
 
 
-const getUserId = async (uniqueId) => {
-  const response = await fetch(`users/${uniqueId}`);
-  console.log(response);
-  const userId = response.userId;
-  console.log(userId);
-  return userId;
-}
 
-const showList = async () => {
+
+const showList = async (userId) => {
   const response = await fetch(`notifications/${userId}`);
   const notes = await response.json();
   const elementPlace = document.getElementById('notificationList');
@@ -81,14 +82,15 @@ const showList = async () => {
 
 window.addEventListener('load', async () => {
   const userId = await getUserId(uniqueId);
-  console.log('load is over');
-  // const userId = await fetch(`users/${uniqueId}`);;
-  console.log(userId);
+  console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", userId);
+  // console.log('load is over');
+  // // const userId = await fetch(`users/${uniqueId}`);;
+  // console.log(userId);
   if (!uniqueId) {
     return alert('Wrong address');
   }
   const form = document.getElementById('createNotification');
-  await showList();
+  await showList(userId);
   form.addEventListener('submit', async function(event) {
     event.preventDefault();
     let date = ``;
@@ -112,7 +114,7 @@ window.addEventListener('load', async () => {
       while (elementPlace.firstChild) {
         elementPlace.firstChild.remove()
       }
-      await showList();
+      await showList(userId);
     }
   });
   

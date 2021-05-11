@@ -21,8 +21,7 @@ app.get('/notifications/:userId', async (req, res) => {
 
 app.get('/users/:uniqueId', async (req, res) => {
   const user = await User.findById(req.params.uniqueId);
-  console.log(user);
-  res.json({ userId: user.telegramId });
+  res.json(user.telegramId);
 });
 
 app.post('/notifications/:userId', async (req, res) => {
