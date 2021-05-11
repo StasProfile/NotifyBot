@@ -46,7 +46,8 @@ bot.onText(/\/start/, async (msg) => {
 });
 
 bot.onText(/\/link/, async (msg) => {
-  await bot.sendMessage(msg.from.id, `Держи твою персональную ссылку для управления уведомлениями из браузера:\n${process.env.APP_URL}?userId=${msg.from.id}`)
+  const user = await User.findOne({ telegramId: msg.from.id })
+  await bot.sendMessage(msg.from.id, `Держи твою персональную ссылку для управления уведомлениями из браузера:\n${process.env.APP_URL}?uniqueId=${user._id}`)
     .catch((err) => console.log(err));
 });
 

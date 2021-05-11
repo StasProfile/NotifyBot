@@ -9,6 +9,7 @@ const bot = require('./bot.js');
 const app = express();
 const port = 3000;
 const Note = require('./database/models/note');
+const User = require('./database/models/user');
 
 app.use(express.json());
 app.use(express.static('public'));
@@ -16,6 +17,12 @@ app.use(express.static('public'));
 app.get('/notifications/:userId', async (req, res) => {
   const notes = await Note.find({ userId: req.params.userId }).sort('date');
   res.json(notes);
+});
+
+app.get('/users/:uniqueId', async (req, res) => {
+  const user = await User.findById(req.params.uniqueId);
+  console.log(user);
+  res.json({ userId: user.telegramId });
 });
 
 app.post('/notifications/:userId', async (req, res) => {
@@ -40,7 +47,7 @@ app.post('/notifications/:userId', async (req, res) => {
 app.delete('/notifications/:userId/:notificationId', async (req, res) => {
   const note = await Note.findOne({ _id: req.params.notificationId });
   if (!note) {
-    return res.json({message: 'note not found'});
+    return res.json({ message: 'note not found' });
   }
   const dt = await DateTime.fromJSDate(new Date(note.date)).toFormat('HH:mm dd/MM');
   await Note.deleteOne({ _id: req.params.notificationId, userId: req.params.userId });

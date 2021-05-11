@@ -1,6 +1,7 @@
 const searchParams = new URLSearchParams(location.search);
-const userId = searchParams.get('userId');
-
+// const userId = searchParams.get('userId');
+const uniqueId = searchParams.get('uniqueId');
+console.log(uniqueId);
 
 function zero_first_format(value)
   {
@@ -40,6 +41,15 @@ function zero_first_format(value)
       return `${hours}:${minutes} ${day}.${month}.${year}`;
   }
 
+
+const getUserId = async (uniqueId) => {
+  const response = await fetch(`users/${uniqueId}`);
+  console.log(response);
+  const userId = response.userId;
+  console.log(userId);
+  return userId;
+}
+
 const showList = async () => {
   const response = await fetch(`notifications/${userId}`);
   const notes = await response.json();
@@ -70,7 +80,11 @@ const showList = async () => {
 }
 
 window.addEventListener('load', async () => {
-  if (!userId) {
+  const userId = await getUserId(uniqueId);
+  console.log('load is over');
+  // const userId = await fetch(`users/${uniqueId}`);;
+  console.log(userId);
+  if (!uniqueId) {
     return alert('Wrong address');
   }
   const form = document.getElementById('createNotification');
