@@ -72,11 +72,12 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
   }
 
   const dateNow = Date.now();
-  // console.log(dt.ts);
+  console.log(dt);
 
   const day = 5184000000;
 
   if (dateNow > dt.ts) {
+    dt.c.day += 1;
     dt.ts += day;
   }
 
