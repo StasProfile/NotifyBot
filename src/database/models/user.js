@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     require: true,
   },
   username: String,
-  // notes: [{
+  // notes: [{  //
   //   type: mongoose.Schema.Types.ObjectId,
   //   ref: 'Note',
   // }],
