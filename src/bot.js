@@ -72,7 +72,6 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
   }
 
   const dateNow = Date.now();
-  console.log(dt);
 
   const day = 5184000000;
 
@@ -80,8 +79,6 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
     dt.c.day += 1;
     dt.ts += day;
   }
-
-  // console.log(dt.ts);
 
   let user = await User.findOne({ telegramId: msg.from.id })
     .catch((e) => {
@@ -95,10 +92,6 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
       username: `${msg.from.first_name} ${msg.from.last_name}`,
     });
   }
-
-  // console.log(dt.setZone('Europe/Moscow', {
-  //   keepLocalTime: true,
-  // }).toJSDate());
 
   await Note.create({
     userId: msg.from.id,
