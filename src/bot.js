@@ -76,10 +76,10 @@ bot.onText(/\/new (.+) в (.+)/, async (msg, match) => {
   console.log(dt);
   const day = 5184000000;
 
-  if (dateNow > dt.ts) {
-    dt.c.day += 1;
-    dt.ts += day;
-  }
+  // if (dateNow > dt.ts) {
+  //   dt.c.day += 1;
+  //   dt.ts += day;
+  // }
   //comment dat
   const hourNow = new Date(Date.now()).getUTCHours();
   if ((hourNow >= 21 && hourNow <= 23) || hourNow === 0) {
