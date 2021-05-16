@@ -26,6 +26,17 @@ ul li {
     padding: 12px 10px 12px 16px;
 }
 
+.notification__edit {
+    cursor: pointer;
+    font-size: 30px;
+    color: rgba(245, 11, 11, 0.973);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: -10;
+    padding: 12px 10px 12px 16px;
+}
+
 
 /* кнопка отправить*/
 .add-button {
@@ -79,7 +90,7 @@ textarea {
     width: 100%; /* Ширина поля в процентах */
     height: 100px; /* Высота поля в пикселах */
     resize: none; /* Запрещаем изменять размер */
-    font-family: cursive;
+    /* font-family: cursive; */
     font-size: 20px;
    } 
 big
@@ -96,8 +107,29 @@ big
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
-    font-family: cursive;
+    /* font-family: cursive; */
     color: black;
     display: block;
     position: relative;
+}
+.notification__edit {
+    margin-right: 30px;
+    margin-top: 8px;
+    /* padding: 10px; */
+    font-size: 20px;
+    /* border: 3px solid #ddd; */
+    /* border-top: 10px; */
+    /* border-radius:10px; */
+    color:cornflowerblue;
+}
+.notification__edit__discard {
+    margin-top: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    color:cornflowerblue;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: -10;
+    padding: 12px 10px 12px 16px;
 }

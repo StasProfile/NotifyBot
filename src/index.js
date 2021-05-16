@@ -61,6 +61,31 @@ app.delete('/notifications/:userId/all', async (req, res) => {
   res.json({ message: 'all notifications successfuly deleted' });
 });
 
+app.patch('/notifications/:userId/:notificationId', async (req, res) => {
+  const note = await Note.findOne({ _id: req.params.notificationId });
+  if (!note) {
+    
+    return res.json({ message: 'note not found' });
+  }
+  const dt = DateTime.fromFormat(req.body.date, 'HH:mm dd/MM');
+  try {
+    await Note.updateOne({ _id: req.params.notificationId, userId: req.params.userId }, {
+      message: req.body.text,
+      date: dt.setZone('Europe/Moscow', {
+        keepLocalTime: true,
+      }).toJSDate(),
+    })
+  } catch (error) {
+
+    console.log(error);
+  }
+
+  await bot.sendMessage(req.params.userId, `Уведомление изменено! Я обязательно напомню ${req.body.text} в ${dt.toFormat('HH:mm dd/MM')}`)
+    .catch((err) => console.log(err));
+
+  res.json({ message: 'sucessfuly updated' });
+});
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ message: 'Something went wrong' });
