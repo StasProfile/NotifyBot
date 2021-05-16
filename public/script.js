@@ -159,7 +159,7 @@ const showList = async (userId) => {
           })
         });
         const resp = await respPatch.json();
-        if (resp.message = "note not found") {
+        if (dateNotification - dateNow < 0) {
           alert('Уведомление уже отправлено!');
           editDiv.remove();
           newElement.remove();
